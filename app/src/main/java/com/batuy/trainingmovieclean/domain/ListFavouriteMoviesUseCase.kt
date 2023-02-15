@@ -1,6 +1,8 @@
 package com.batuy.trainingmovieclean.domain
 
-class ListFavouriteMoviesUseCase(private val repository: MovieRepository) {
+import javax.inject.Inject
+
+class ListFavouriteMoviesUseCase @Inject constructor(private val repository: MovieRepository) {
 
     operator fun invoke() = repository.listFavouriteMovies()
 }

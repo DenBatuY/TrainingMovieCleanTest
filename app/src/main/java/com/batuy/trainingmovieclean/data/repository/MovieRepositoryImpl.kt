@@ -5,17 +5,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.batuy.trainingmovieclean.data.database.Dao
 import com.batuy.trainingmovieclean.data.database.DataBase
 import com.batuy.trainingmovieclean.data.mapper.Mapper
 import com.batuy.trainingmovieclean.data.network.ApiFactory
+import com.batuy.trainingmovieclean.data.network.ApiService
 import com.batuy.trainingmovieclean.domain.Movie
 import com.batuy.trainingmovieclean.domain.MovieRepository
+import javax.inject.Inject
 
-class MovieRepositoryImpl(private val application: Application) : MovieRepository {
+class MovieRepositoryImpl @Inject constructor(
+    private val application: Application,
+    private val mapper: Mapper,
+    private val apiService:ApiService,
+    private val dao: Dao
+) : MovieRepository {
 
-    private val mapper = Mapper()
-    private val apiService = ApiFactory.apiService
-    private val dao = DataBase.getInstance(application).dao()
     private var page = 1
 
     private val movie = MutableLiveData<List<Movie>>()
@@ -41,7 +46,9 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
             }
             page++
             isLoading.value = false
-        }catch (e:java.lang.Exception){ Log.d("test","load problem $e")}
+        } catch (e: java.lang.Exception) {
+            Log.d("test", "load problem $e")
+        }
     }
 
     override fun listOfMovie(): LiveData<List<Movie>> {
@@ -49,7 +56,7 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
     }
 
     override suspend fun insertFavouriteMovie(movie: Movie) {
-       // Log.d("test", "MovieRepositoryImpl  ${movie.name}")
+        // Log.d("test", "MovieRepositoryImpl  ${movie.name}")
         dao.insertMovie(mapper.mapEntityToDbModel(movie))
     }
 
@@ -59,7 +66,7 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
 
     override fun listFavouriteMovies(): LiveData<List<Movie>> {
 
-        return Transformations.map(dao.getAllLoadingMovies()){ movieDbList ->
+        return Transformations.map(dao.getAllLoadingMovies()) { movieDbList ->
             movieDbList.map {
                 mapper.mapDbModelToEntity(it)
             }
@@ -67,7 +74,7 @@ class MovieRepositoryImpl(private val application: Application) : MovieRepositor
     }
 
     override fun favouriteMovie(id: Int): LiveData<Movie> {
-        return Transformations.map(dao.grtFavouriteMovie(id)){
+        return Transformations.map(dao.grtFavouriteMovie(id)) {
             mapper.mapDbModelToEntity(it)
         }
     }

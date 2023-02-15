@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.batuy.trainingmovieclean.R
 import com.batuy.trainingmovieclean.databinding.ActivityMainBinding
 import com.batuy.trainingmovieclean.presentation.adapter.Adapter
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -19,13 +20,20 @@ class MainActivity : AppCompatActivity() {
     private val movieAdapter by lazy {
         Adapter()
     }
+    @Inject
+     lateinit var viewModelFactory: ViewModelFactory
+
+   private val component by lazy {
+       (application as MovieApp).component
+   }
 
     private lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this,viewModelFactory)[MainViewModel::class.java]
 
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerView.adapter = movieAdapter

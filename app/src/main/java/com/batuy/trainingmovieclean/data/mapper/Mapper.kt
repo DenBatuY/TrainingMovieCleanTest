@@ -3,8 +3,9 @@ package com.batuy.trainingmovieclean.data.mapper
 import com.batuy.trainingmovieclean.data.database.MovieDb
 import com.batuy.trainingmovieclean.data.network.model.MovieDto
 import com.batuy.trainingmovieclean.domain.Movie
+import javax.inject.Inject
 
-class Mapper {
+class Mapper @Inject constructor() {
 
     fun mapMovieDtoToEntity(dto: MovieDto): Movie {
         return Movie(

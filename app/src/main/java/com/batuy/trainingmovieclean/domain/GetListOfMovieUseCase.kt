@@ -1,6 +1,8 @@
 package com.batuy.trainingmovieclean.domain
 
-class GetListOfMovieUseCase(private val repository: MovieRepository) {
+import javax.inject.Inject
+
+class GetListOfMovieUseCase @Inject constructor(private val repository: MovieRepository) {
 
     operator fun invoke() = repository.listOfMovie()
 }

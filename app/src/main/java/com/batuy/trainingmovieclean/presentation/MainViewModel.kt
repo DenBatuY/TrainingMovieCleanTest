@@ -2,21 +2,22 @@ package com.batuy.trainingmovieclean.presentation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.batuy.trainingmovieclean.data.repository.MovieRepositoryImpl
 import com.batuy.trainingmovieclean.domain.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = MovieRepositoryImpl(application)
-    private val loadUseCase = LoadMoviesUseCase(repository)
-    private val listOfMoviesUseCase = GetListOfMovieUseCase(repository)
-    private val insertFavouriteMovieUseCase = InsertFavouriteMovieUseCase(repository)
-    private val deleteFavouriteMovieUseCase = DeleteFavouriteMovieUseCase(repository)
-    private val listFavouriteMoviesUseCase = ListFavouriteMoviesUseCase(repository)
-    private val favouriteMovieUseCase = FavouriteMovieUseCase(repository)
-    private val isLoadingUseCase = IsLoadingUseCase(repository)
+class MainViewModel @Inject constructor(
+    private val loadUseCase: LoadMoviesUseCase,
+    private val listOfMoviesUseCase: GetListOfMovieUseCase,
+    private val insertFavouriteMovieUseCase: InsertFavouriteMovieUseCase,
+    private val deleteFavouriteMovieUseCase: DeleteFavouriteMovieUseCase,
+    private val listFavouriteMoviesUseCase: ListFavouriteMoviesUseCase,
+    private val favouriteMovieUseCase: FavouriteMovieUseCase,
+    private val isLoadingUseCase: IsLoadingUseCase
+) : ViewModel() {
 
 
     val listOfMovie = listOfMoviesUseCase()
