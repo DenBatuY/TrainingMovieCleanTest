@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.batuy.trainingmovieclean.R
+import com.batuy.trainingmovieclean.data.repository.MovieRepositoryImpl
 import com.batuy.trainingmovieclean.databinding.ActivityMainBinding
 import com.batuy.trainingmovieclean.presentation.adapter.Adapter
 import javax.inject.Inject
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+
 
         viewModel = ViewModelProvider(this,viewModelFactory)[MainViewModel::class.java]
 

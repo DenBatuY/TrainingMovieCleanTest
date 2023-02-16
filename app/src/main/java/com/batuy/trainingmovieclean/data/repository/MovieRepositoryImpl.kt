@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.batuy.trainingmovieclean.data.database.Dao
-import com.batuy.trainingmovieclean.data.database.DataBase
 import com.batuy.trainingmovieclean.data.mapper.Mapper
 import com.batuy.trainingmovieclean.data.network.ApiFactory
 import com.batuy.trainingmovieclean.data.network.ApiService
@@ -17,11 +16,13 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val application: Application,
     private val mapper: Mapper,
-    private val apiService:ApiService,
+    private val apiService: ApiService,
     private val dao: Dao
 ) : MovieRepository {
 
     private var page = 1
+
+    //val apiService = ApiFactory.apiService
 
     private val movie = MutableLiveData<List<Movie>>()
     private val isLoading = MutableLiveData<Boolean>()
@@ -46,6 +47,7 @@ class MovieRepositoryImpl @Inject constructor(
             }
             page++
             isLoading.value = false
+            Log.d("test", "MovieRepositoryImpl  loadMovies  ${movie.value}")
         } catch (e: java.lang.Exception) {
             Log.d("test", "load problem $e")
         }
@@ -54,6 +56,9 @@ class MovieRepositoryImpl @Inject constructor(
     override fun listOfMovie(): LiveData<List<Movie>> {
         return movie
     }
+  init {
+      Log.d("test", "MovieRepositoryImpl  ${movie.value}")
+  }
 
     override suspend fun insertFavouriteMovie(movie: Movie) {
         // Log.d("test", "MovieRepositoryImpl  ${movie.name}")

@@ -1,6 +1,7 @@
 package com.batuy.trainingmovieclean.presentation
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,15 +21,18 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    val listOfMovie = listOfMoviesUseCase()
 
-    val isLoading = isLoadingUseCase()
 
     fun loadMovies() {
         viewModelScope.launch {
+            //Log.d("test","MainViewModel  loadMovies")
             loadUseCase()
         }
     }
+
+    val listOfMovie = listOfMoviesUseCase()
+
+    val isLoading = isLoadingUseCase()
 
     fun insertFavouriteMovie(movie: Movie) {
         viewModelScope.launch {
