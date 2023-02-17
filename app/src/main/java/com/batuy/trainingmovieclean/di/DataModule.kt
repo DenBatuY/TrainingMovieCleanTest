@@ -16,16 +16,19 @@ import dagger.Provides
 interface DataModule {
 
     @Binds
+    @ApplicationScope
     fun bindMovieRepository(impl: MovieRepositoryImpl):MovieRepository
 
 companion object{
 
     @Provides
+    @ApplicationScope
     fun providesDao(application: Application):Dao{
         return DataBase.getInstance(application).dao()
     }
 
     @Provides
+    @ApplicationScope
     fun providesApiService():ApiService{
         return ApiFactory.apiService
     }

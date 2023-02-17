@@ -47,7 +47,7 @@ class MovieRepositoryImpl @Inject constructor(
             }
             page++
             isLoading.value = false
-            Log.d("test", "MovieRepositoryImpl  loadMovies  ${movie.value}")
+           // Log.d("test", "MovieRepositoryImpl  loadMovies  ${listOfMovie().value}")
         } catch (e: java.lang.Exception) {
             Log.d("test", "load problem $e")
         }
@@ -57,7 +57,7 @@ class MovieRepositoryImpl @Inject constructor(
         return movie
     }
   init {
-      Log.d("test", "MovieRepositoryImpl  ${movie.value}")
+      Log.d("test", "MovieRepositoryImpl  ${listOfMovie().value}")
   }
 
     override suspend fun insertFavouriteMovie(movie: Movie) {

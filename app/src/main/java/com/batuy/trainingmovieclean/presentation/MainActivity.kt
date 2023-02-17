@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
 
         viewModel.listOfMovie.observe(this) {
-             Log.d("test", "MainActivity $it")
+             //Log.d("test", "MainActivity $it")
             movieAdapter.submitList(it)
         }
 
